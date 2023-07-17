@@ -85,7 +85,7 @@ export const createGame = (socket: WebSocket.Server, clients: Map<WebSocket.WebS
     const isUserGame = room.roomUsers.findIndex(user => user.index === id);
     if (isUserGame != -1) {
       const game = { idGame: room.roomId, idPlayer: id };
-      sendMessage.type = Types.start_game;
+      sendMessage.type = Types.create_game;
       sendMessage.data = JSON.stringify(game);
       sendData(client, sendMessage);
 

@@ -1,22 +1,17 @@
 import { ErrorMessage, StatusCode } from '../constants';
 import { CustomError } from '../exception';
-import { RoomInfo, UserInfo } from '../../models/models';
+import { RoomInfo, RoomUser, UserInfo } from '../../models/models';
 import { rooms } from '../../db/db';
 import exp from 'constants';
 
-export const addRoom = async () => {
-    // if (!(obj?.name && obj.name != null && typeof obj.name === 'string')) throw ErrorMessage.ERROR_VALIDATION;
-    // if (!(obj?.password && obj.password != null && typeof obj.password === 'string')) throw ErrorMessage.ERROR_VALIDATION;
-    // let rooms = await getRooms();
-    // if(user) return user;
-    // user = obj;
-    // user.index = users.length + 1;
-
-    // users.push(user);
+export const addRoom = async (userInfo: UserInfo) => {
     const room = new RoomInfo(rooms.length + 1);
-
+    room.roomId = rooms.length + 1;
+    const user = new RoomUser(userInfo.name, userInfo.index);
+    room.roomUsers.push(user)
     rooms.push(room);
-    // return rooms;
+
+    return rooms;
 }
 
 export const getRooms = async () => {

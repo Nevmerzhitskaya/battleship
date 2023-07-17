@@ -1,5 +1,4 @@
-import { ErrorMessage, StatusCode } from '../constants';
-import { CustomError } from '../exception';
+import { ErrorMessage } from '../constants';
 import { UserInfo } from '../../models/models';
 import { users } from '../../db/db';
 

@@ -3,7 +3,7 @@ import * as WebSocket from "ws";
 import { httpServer } from ".";
 import { Message, RoomUser, Types, UserInfo } from "../../src/models/models";
 import { addUser } from "../app/users/users.service";
-import { addUserToRoom, createRoom, registration } from "./server.service";
+import { addShips, addUserToRoom, createRoom, registration } from "./server.service";
 import { v4 as uuidv4 } from 'uuid';
 import { rooms } from "../db/db";
 // import { Commands } from "../../src/app/constants";
@@ -40,6 +40,13 @@ export const socketConnection = async () => {
         const data = JSON.parse(msgObj.data.toString());
         console.log('add_user_to_room');
         addUserToRoom(socket, clients, ws, data);
+      }
+
+      if (msgObj.type === Types.add_ships) {
+
+        const data = JSON.parse(msgObj.data.toString());
+        console.log('add_ships');
+        addShips(socket, clients, ws, data);
       }
 
 

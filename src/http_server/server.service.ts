@@ -1,9 +1,9 @@
 
 import * as WebSocket from "ws";
-import { Message, RoomInfo, RoomUser, Types, UserInfo } from "../models/models";
+import { GameInfo, Message, RoomInfo, RoomUser, Types, UserInfo } from "../models/models";
 import { addUser } from "../app/users/users.service";
 import { addRoom } from "../app/rooms/rooms.service";
-import { rooms, users } from "../db/db";
+import { games, rooms, users } from "../db/db";
 
 function sendData(client: WebSocket.WebSocket, data: Message) {
   client.send(JSON.stringify(data));
@@ -91,4 +91,24 @@ export const createGame = (socket: WebSocket.Server, clients: Map<WebSocket.WebS
 
     }
   });
+}
+
+export const addShips = (socket: WebSocket.Server, clients: Map<WebSocket.WebSocket, number>, ws: WebSocket.WebSocket, game: GameInfo) => {
+  games.push(game);
+  console.log(games);
+  const curGame = games.filter(el => el.gameId === game.gameId);
+  if(curGame.length === 2) {
+    const sendMessage = new Message();
+    socket.clients.forEach(async client => {
+      const id = clients.get(client);
+      const userGame = curGame.filter(game => game.indexPlayer === id);
+      if (userGame) {
+        const game = { currentPlayerIndex: userGame[0].indexPlayer, ships: userGame[0].ships };
+        sendMessage.type = Types.start_game;
+        sendMessage.data = JSON.stringify(game);
+        sendData(client, sendMessage);
+  
+      }      
+    });
+  }
 }

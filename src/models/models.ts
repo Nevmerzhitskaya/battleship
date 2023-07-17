@@ -17,6 +17,32 @@ export class UserInfo {
 
 }
 
+export class GameInfo {
+  gameId: number;
+  ships: Array<Ship>;
+  indexPlayer: number;
+
+  constructor() {
+    this.ships = [];
+    this.gameId = 0;
+    this.indexPlayer = 0;
+  }
+}
+
+export class Ship {
+  position: { x: number, y: number };
+  direction: boolean;
+  length: number;
+  type: TypeSize;
+  
+  constructor(type: TypeSize) {
+    this.position = {x: 0, y: 0};
+    this.direction = true;
+    this.length = 0;
+    this.type = type;
+  }
+}
+
 export class RoomInfo {
   roomId: number;
   roomUsers: Array<RoomUser>;
@@ -30,7 +56,7 @@ export class RoomInfo {
 export class RoomUser {
   name: string;
   index: number;
-  
+
   constructor(name: string, index: number) {
     this.name = name;
     this.index = index;
@@ -50,4 +76,11 @@ export const enum Types {
   randomAttack = 'randomAttack',
   turn = 'turn',
   finish = 'finish'
+}
+
+export const enum TypeSize {
+  small = 'small',
+  medium = 'medium',
+  large = 'large',
+  huge = 'huge',
 }

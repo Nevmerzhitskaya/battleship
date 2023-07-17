@@ -1,19 +1,40 @@
-export interface ReceivedMessage {
-  type: string;
-  data: UserInfo;
+export class Message {
+  type = '';
+  data = '';
   id: number;
+
+  constructor() {
+    this.id = 0;
+  }
 }
 
-export interface UserInfo {
-  name: string;
-  password: string;
+export class UserInfo {
+  name = '';
+  password = '';
+  index?: number;
+  error = false;
+  errorText = '';
+
 }
 
-export interface UserInfoError {
+export class RoomInfo {
+  roomId: number;
+  roomUsers: Array<RoomUsers>;
+
+  constructor(roomId: number) {
+    this.roomUsers = [];
+    this.roomId = roomId;
+  }
+}
+
+export class RoomUsers {
   name: string;
   index: number;
-  error: boolean;
-  errorText: string;
+  
+  constructor(name: string, index: number) {
+    this.name = name;
+    this.index = index;
+  }
 }
 
 export const enum Types {
